@@ -1,0 +1,37 @@
+Cross-seed reproducibility of the tuned kcats.
+
+Seed 0 is the run in models/ecYeastGEM.yml; seed 1 repeats it with the
+same tunable set (108 kcats, target_impact_share 0.95) and settings. The
+two reach similar fits (rmse 0.9743 vs 0.8922), and the search leaves
+several kcats undetermined: where the seeds disagree on a kcat, the
+objective is flat in that direction.
+
+Agreement over the top N corrections ranked by leverage:
+
+     N  same direction  median disagreement  within 2-fold
+    10           60%                1.38x            80%
+    25           60%                1.41x            72%
+    50           56%                1.63x            66%
+   107           57%                1.42x            71%
+
+Among the 31 corrections beyond 2-fold at seed 0, 22 (71%) go the same
+direction at seed 1, 17 (55%) land within 2-fold of each other and 29
+(94%) within 5-fold.
+
+The eight corrections beyond 5-fold at seed 0, seed 0 vs seed 1:
+
+reaction                 prior      seed 0      seed 1
+r_0079                    0.05      0.3675      0.3878
+r_0109                    1.23       8.133       7.136
+r_2491                 0.02078       0.166    0.008322
+r_1134_EXP_6             1.231       6.418       7.015
+r_0961                    37.9       760.8       528.9
+r_1139_EXP_13            5.484       119.3       29.17
+r_0149                   4.624      0.6696      0.1778
+r_0150                   4.624      0.6668      0.2009
+
+r_0079, r_0109 and r_1134_EXP_6 agree closely across seeds and are
+the corrections to act on. r_0961 agrees on direction and rough size.
+r_2491 moves in opposite directions, and the adenylate kinase pair
+(r_0149, r_0150) and r_1139_EXP_13 disagree on size, so treat those as
+undetermined.

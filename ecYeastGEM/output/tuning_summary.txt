@@ -1,0 +1,12 @@
+seed: 0
+generations: 212
+converged: False
+rmse: 6.1056 -> 0.9743
+kcats searched: 108
+kcats changed: 107
+corrections listed: 107
+movement[custom]: {'median_fold': 1.4952060527751452, 'median_fold_moved': 1.4952060527751452, 'frac_near_prior': 0.0, 'n': 9, 'n_moved': 9}
+movement[database]: {'median_fold': 1.2501520425484458, 'median_fold_moved': 1.434605375868764, 'frac_near_prior': 0.22448979591836735, 'n': 49, 'n_moved': 38}
+movement[okp]: {'median_fold': 1.7824213643898918, 'median_fold_moved': 1.7824213643898918, 'frac_near_prior': 0.0, 'n': 44, 'n_moved': 44}
+movement[unlabelled]: {'median_fold': 1.3401129620191232, 'median_fold_moved': 1.3401129620191232, 'frac_near_prior': 0.3333333333333333, 'n': 6, 'n_moved': 4}
+movement[_ordered]: False

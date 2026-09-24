@@ -1,0 +1,71 @@
+# Adapter parameters for ecYeastGEM, built from yeast-GEM 9.1.1.
+
+conv_gem = "models/yeast-GEM.yml"
+
+org_name = "saccharomyces cerevisiae"
+
+sigma = 0.5
+p_tot = 0.5
+f = 0.5
+gr_exp = 0.41
+
+c_source = "r_1714"
+bio_rxn = "r_4041"
+enzyme_comp = "cytoplasm"
+
+[kegg]
+id = "sce"
+gene_id = "kegg"
+
+[uniprot]
+type = "proteome"
+id = "UP000002311"
+gene_id_field = "gene_oln"
+reviewed = true
+
+[complex]
+taxonomic_id = 559292
+
+[okp]
+# EITLEM predicts kcat for the reactions BRENDA cannot match. Sequences
+# beyond its 1024-residue limit are truncated server-side.
+method = "EITLEM"
+handle_long_sequences = "truncate"
+
+[evotune]
+sigma0_log_default = 0.3
+rmse_threshold = 0.2
+# CMA-ES generations. 212 approximates a 6800-evaluation budget at
+# cmaes_kcat_tuning's own default population size for ~110 free
+# parameters; a different tunable-set size changes that population
+# size and so the evaluation count this actually spends.
+max_generations = 212
+# Weights the max-growth term against the flux term,
+# (rmse_flux + w * rmse_max_growth) / (w + 1): the eight max-growth
+# conditions count double against the 33 flux conditions, which are
+# 30 parts glucose.
+max_growth_weight = 2.0
+
+# Trust tiers, least to most trusted. These match `ec.source`, which
+# `apply_kcat_list` writes normalised -- lowercase, separators folded to
+# "_" -- so an OKP EITLEM prediction, labelled "Prediction from
+# EITLEM-Kinetics" in the result and "OKP-EITLEM-Kinetics" in the merged
+# list, lands as "okp_eitlem_kinetics". Neither the method id below
+# ("EITLEM") nor the hyphenated label matches that, so it is listed
+# outright rather than left to match_okp. OKP also passes through
+# measured values it found in BRENDA, Sabio-RK or UniProt, which belong
+# on the database tier alongside the fuzzy BRENDA matches.
+[evotune.source_groups.okp]
+sources = ["okp_eitlem_kinetics", "OKP-EITLEM-Kinetics", "EITLEM-Kinetics"]
+match_okp = true
+
+[evotune.source_groups.database]
+sources = ["brenda", "okp_brenda", "okp_sabio_rk", "okp_uniprot"]
+
+[evotune.source_groups.custom]
+sources = ["custom"]
+
+[evotune.sigma0_log_source]
+okp = 0.25
+database = 0.2
+custom = 0.1

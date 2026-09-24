@@ -1,0 +1,17 @@
+# Downloaded on first run (build.py kcats / download_phyl_dist).
+data/PhylDist.mat
+# OpenKineticsPredictor API key -- a secret.
+data/okpApiKey.txt
+gurobi.env
+
+# The yeast-GEM release the model is built from, fetched by `build.py`.
+models/yeast-GEM.yml
+# Pipeline checkpoints, rebuilt by `build.py`.
+models/ecYeastGEM_stage1.yml
+models/ecYeastGEM_stage2_smiles.yml
+models/ecYeastGEM_stage2.yml
+
+# Run state and logs; the TSVs beside them are the reports.
+output/*.pkl
+output/*.log
+data/OKP_job.txt
